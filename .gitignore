@@ -15,6 +15,7 @@ dist-ssr
 *.lock
 *-lock.json
 .env
+.wrangler
 
 # Editor directories and files
 .vscode/*

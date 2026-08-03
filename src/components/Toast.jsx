@@ -1,7 +1,18 @@
 import React, { useEffect } from 'react';
 import { CheckCircle2, AlertCircle, Info, X } from 'lucide-react';
 
-export const Toast = ({ toast, onClose }) => {
+export const Toast = ({ toast, onClose, duration = 3000 }) => {
+  useEffect(() => {
+    if (!toast) return;
+
+    const autoCloseDuration = toast.duration || duration;
+    const timer = setTimeout(() => {
+      onClose();
+    }, autoCloseDuration);
+
+    return () => clearTimeout(timer);
+  }, [toast, onClose, duration]);
+
   if (!toast) return null;
 
   const { type = 'info', message } = toast;
@@ -28,6 +39,7 @@ export const Toast = ({ toast, onClose }) => {
         <button
           onClick={onClose}
           className="text-slate-400 hover:text-slate-200 transition p-0.5"
+          aria-label="Chiudi notifica"
         >
           <X className="w-4 h-4" />
         </button>

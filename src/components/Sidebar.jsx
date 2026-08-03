@@ -1,30 +1,31 @@
 import React from 'react';
+import { Link, useLocation } from 'wouter';
 import { 
   LayoutDashboard, 
   UserX, 
   CreditCard, 
   Mail, 
   ShieldCheck, 
-  Settings, 
   Sparkles,
   Database
 } from 'lucide-react';
 
-export const Sidebar = ({ activeTab, setActiveTab }) => {
+export const Sidebar = () => {
+  const [location] = useLocation();
+
   const navItems = [
-    { id: 'overview', label: 'Panoramica', icon: LayoutDashboard },
-    { id: 'inactive', label: 'Utenti Inattivi', icon: UserX },
-    { id: 'revenuecat', label: 'Hub RevenueCat', icon: CreditCard },
-    { id: 'resend', label: 'Email Resend', icon: Mail },
-    { id: 'safety', label: 'Controllo Sicurezza', icon: ShieldCheck },
-    { id: 'settings', label: 'Impostazioni', icon: Settings },
+    { id: 'overview', path: '/overview', label: 'Panoramica', icon: LayoutDashboard },
+    { id: 'inactive', path: '/inactive', label: 'Utenti Inattivi', icon: UserX },
+    { id: 'revenuecat', path: '/revenuecat', label: 'Hub RevenueCat', icon: CreditCard },
+    { id: 'resend', path: '/resend', label: 'Email Resend', icon: Mail },
+    { id: 'safety', path: '/safety', label: 'Controllo Sicurezza', icon: ShieldCheck },
   ];
 
   return (
     <aside className="w-68 border-r border-slate-800/80 bg-[#0c121e]/90 flex flex-col justify-between shrink-0 h-screen sticky top-0">
       <div>
         {/* Brand Header */}
-        <div className="p-5 sm:p-6 border-b border-slate-800/80 flex items-center gap-3.5">
+        <Link href="/" className="p-5 sm:p-6 border-b border-slate-800/80 flex items-center gap-3.5 hover:opacity-90 transition block">
           <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-cyan-400 flex items-center justify-center shadow-lg shadow-indigo-500/25 shrink-0">
             <Sparkles className="w-5 h-5 text-white" />
           </div>
@@ -34,7 +35,7 @@ export const Sidebar = ({ activeTab, setActiveTab }) => {
             </h1>
             <p className="text-[11px] text-slate-400 font-medium mt-0.5">Dashboard Operativa & API</p>
           </div>
-        </div>
+        </Link>
 
         {/* Navigation Items */}
         <nav className="p-4 space-y-1.5">
@@ -43,11 +44,11 @@ export const Sidebar = ({ activeTab, setActiveTab }) => {
           </div>
           {navItems.map((item) => {
             const Icon = item.icon;
-            const isActive = activeTab === item.id;
+            const isActive = location === item.path || (item.path === '/overview' && location === '/');
             return (
-              <button
+              <Link
                 key={item.id}
-                onClick={() => setActiveTab(item.id)}
+                href={item.path}
                 className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all group ${
                   isActive
                     ? 'bg-indigo-600/15 text-indigo-400 border border-indigo-500/30 shadow-md shadow-indigo-950/50'
@@ -56,7 +57,7 @@ export const Sidebar = ({ activeTab, setActiveTab }) => {
               >
                 <Icon className={`w-4 h-4 transition-transform group-hover:scale-110 ${isActive ? 'text-indigo-400' : 'text-slate-400'}`} />
                 <span>{item.label}</span>
-              </button>
+              </Link>
             );
           })}
         </nav>

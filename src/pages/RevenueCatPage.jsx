@@ -57,7 +57,7 @@ export const RevenueCatPage = ({ setToast }) => {
       </div>
 
       {/* API Key Missing Warning */}
-      {!revenueCatKey && (
+      {!config?.revenueCatKey && (
         <div className="p-4 bg-amber-950/40 border border-amber-800/40 rounded-xl text-amber-300 text-xs flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <Key className="w-4 h-4 text-amber-400" />
@@ -77,7 +77,7 @@ export const RevenueCatPage = ({ setToast }) => {
               value={appUserId}
               onChange={(e) => setAppUserId(e.target.value)}
               placeholder="Inserisci App User ID o GUID cliente (es. user_10294)..."
-              className="glass-input w-full pl-10 h-11 text-xs sm:text-sm"
+              className="glass-input w-full pl-11 h-11 text-xs sm:text-sm"
             />
           </div>
           <button

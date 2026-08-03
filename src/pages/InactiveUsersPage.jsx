@@ -240,7 +240,7 @@ export const InactiveUsersPage = ({ setToast }) => {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Cerca per nome, email, ID..."
-                className="glass-input w-full pl-9 h-9 text-xs"
+                className="glass-input w-full pl-11 h-9 text-xs"
               />
             </div>
             <button

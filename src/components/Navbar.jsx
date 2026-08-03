@@ -1,46 +1,14 @@
 import React from 'react';
 import { useAuth } from '../context/AuthContext';
-import { useConfig } from '../context/ConfigContext';
-import { LogOut, Shield, RefreshCw, Server } from 'lucide-react';
+import { LogOut, Shield, RefreshCw } from 'lucide-react';
 
 export const Navbar = ({ onRefresh, isRefreshing }) => {
   const { credentials, logout } = useAuth();
-  const { apiBaseUrl, setApiBaseUrl, SERVER_PRESETS = [] } = useConfig();
-
-  const handleServerChange = (e) => {
-    const newUrl = e.target.value;
-    setApiBaseUrl(newUrl);
-    if (onRefresh) {
-      setTimeout(() => onRefresh(), 100);
-    }
-  };
-
-  const isLocal = apiBaseUrl.includes('localhost') || apiBaseUrl.includes('127.0.0.1');
 
   return (
     <header className="h-16 sm:h-20 border-b border-slate-800/80 bg-[#0c121e]/80 backdrop-blur-md px-6 sm:px-8 py-3.5 flex items-center justify-between sticky top-0 z-40">
       <div className="flex items-center gap-3">
-        {/* Environment / Server Switcher */}
-        <div className="flex items-center gap-2 text-xs bg-slate-900/90 border border-slate-800 px-3 py-1.5 rounded-xl text-slate-300 font-mono shadow-sm">
-          <Server className={`w-3.5 h-3.5 ${isLocal ? 'text-amber-400' : 'text-emerald-400'}`} />
-          <span className="text-slate-400 font-sans font-medium text-[11px] hidden sm:inline">Server:</span>
-          <select
-            value={apiBaseUrl}
-            onChange={handleServerChange}
-            className="bg-transparent text-cyan-300 font-semibold text-xs focus:outline-none cursor-pointer pr-1"
-          >
-            {SERVER_PRESETS.map((preset) => (
-              <option key={preset.id} value={preset.url} className="bg-slate-900 text-slate-200">
-                {preset.name} ({preset.label})
-              </option>
-            ))}
-            {!SERVER_PRESETS.some((p) => p.url === apiBaseUrl) && (
-              <option value={apiBaseUrl} className="bg-slate-900 text-slate-200">
-                Personalizzato ({apiBaseUrl})
-              </option>
-            )}
-          </select>
-        </div>
+        {/* Left Side Header Title / Badge if needed */}
       </div>
 
       <div className="flex items-center gap-4">

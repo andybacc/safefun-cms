@@ -1,19 +1,15 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-export const SERVER_PRESETS = [
-  { id: 'local', name: 'Sviluppo Locale', label: 'localhost:8787', url: 'http://localhost:8787' },
-  { id: 'online', name: 'Produzione Online', label: 'api-public.safefun.it', url: 'https://api-public.safefun.it' },
-];
-
 const ConfigContext = createContext();
 
 export const ConfigProvider = ({ children }) => {
   const [apiBaseUrl, setApiBaseUrl] = useState(() => {
-    return (
-      localStorage.getItem('safefun_cms_api_url') ||
-      import.meta.env.VITE_API_BASE_URL ||
-      'http://localhost:8787'
-    );
+    const stored = localStorage.getItem('safefun_cms_api_url');
+    if (stored) return stored;
+    if (import.meta.env.VITE_API_BASE_URL) return import.meta.env.VITE_API_BASE_URL;
+    return typeof window !== 'undefined' && window.location.hostname !== 'localhost'
+      ? 'https://api-public.safefun.it'
+      : 'http://localhost:8787';
   });
 
   const [revenueCatKey, setRevenueCatKey] = useState(() => {
@@ -45,7 +41,6 @@ export const ConfigProvider = ({ children }) => {
         setRevenueCatKey,
         resendKey,
         setResendKey,
-        SERVER_PRESETS,
       }}
     >
       {children}

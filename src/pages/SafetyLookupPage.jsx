@@ -49,7 +49,7 @@ export const SafetyLookupPage = ({ setToast }) => {
     setLoading(true);
     setResult(null);
     try {
-      const baseUrl = config.apiBaseUrl.replace(/\/$/, '');
+      const baseUrl = (config?.apiBaseUrl || 'http://localhost:8787').replace(/\/$/, '');
       const url = `${baseUrl}/safety/${encodeURIComponent(locale)}/${encodeURIComponent(nome)}/${encodeURIComponent(data)}`;
 
       const res = await fetch(url, {

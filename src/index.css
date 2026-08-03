@@ -71,6 +71,16 @@
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
 }
 
+/* Inputs with icon on the left - ensure proper left padding for text and placeholder */
+.input-icon-left,
+.relative:has(> svg.absolute) > .glass-input,
+.relative:has(> svg.absolute) > input,
+.relative:has(> .absolute.left-3) > input,
+.relative:has(> .absolute.left-3\.5) > input,
+.relative:has(> .absolute.left-4) > input {
+  padding-left: 2.75rem; /* 44px provides clean, spacious alignment past the icon */
+}
+
 .btn-primary {
   background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
   color: #ffffff;
