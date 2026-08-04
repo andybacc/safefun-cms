@@ -1,25 +1,22 @@
-import React, { useState, useRef } from 'react';
-import { sendResendEmail } from '../services/api';
-import { useConfig } from '../context/ConfigContext';
 import {
-  Mail,
-  Send,
-  Key,
-  Eye,
-  Edit3,
+  Bold,
   CheckCircle2,
   Code,
   Columns,
-  Smartphone,
-  Monitor,
-  Sparkles,
-  Bold,
-  Italic,
+  Eye,
   Heading,
-  Link,
+  Italic,
+  Key,
+  Mail,
+  Monitor,
   MousePointer,
-  RotateCcw
+  Send,
+  Smartphone,
+  Sparkles
 } from 'lucide-react';
+import { useRef, useState } from 'react';
+import { useConfig } from '../context/ConfigContext';
+import { sendResendEmail } from '../services/api';
 
 const PRESET_TEMPLATES = {
   operational: {
@@ -76,7 +73,6 @@ const PRESET_TEMPLATES = {
 
 export const ResendPage = ({ setToast }) => {
   const config = useConfig();
-  const { resendKey } = config;
   const [to, setTo] = useState('andreabacciolo80@gmail.com');
   const [from, setFrom] = useState('SafeFun Admin <noreply@safefun.it>');
   const [subject, setSubject] = useState(PRESET_TEMPLATES.operational.subject);
@@ -95,15 +91,11 @@ export const ResendPage = ({ setToast }) => {
       setToast({ type: 'error', message: 'Email del destinatario e oggetto sono obbligatori.' });
       return;
     }
-    if (!resendKey) {
-      setToast({ type: 'error', message: 'Chiave API Resend mancante. Configurala nelle Impostazioni.' });
-      return;
-    }
 
     setSending(true);
     setLastResponse(null);
     try {
-      const result = await sendResendEmail({ to, from, subject, html }, resendKey, config.apiBaseUrl);
+      const result = await sendResendEmail({ to, from, subject, html }, config.apiBaseUrl);
       setLastResponse(result);
       setToast({ type: 'success', message: `Email inviata con successo! ID: ${result.id}` });
     } catch (err) {
@@ -170,16 +162,6 @@ export const ResendPage = ({ setToast }) => {
           </select>
         </div>
       </div>
-
-      {!resendKey && (
-        <div className="p-4 bg-amber-950/40 border border-amber-800/40 rounded-xl text-amber-300 text-xs flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <Key className="w-4 h-4 text-amber-400 shrink-0" />
-            <span>Chiave API Resend non configurata.</span>
-          </div>
-          <span className="font-semibold text-amber-400 underline cursor-pointer">Configura nelle Impostazioni</span>
-        </div>
-      )}
 
       {/* Main Form */}
       <div className="glass-panel p-5 sm:p-6 border-slate-800 space-y-5">

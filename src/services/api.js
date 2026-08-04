@@ -43,7 +43,7 @@ export const fetchRevenueCatSubscriber = async (appUserId, config, auth) => {
 /**
  * Resend Email API Client via Backend Proxy (resolves CORS restrictions)
  */
-export const sendResendEmail = async ({ to, subject, html, text, from }, apiKey, baseUrl = 'http://localhost:8787') => {
+export const sendResendEmail = async ({ to, subject, html, text, from }, baseUrl = 'http://localhost:8787') => {
   const cleanBaseUrl = (baseUrl || 'http://localhost:8787').replace(/\/$/, '');
   const url = `${cleanBaseUrl}/resend`;
 
@@ -59,8 +59,6 @@ export const sendResendEmail = async ({ to, subject, html, text, from }, apiKey,
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'x-resend-key': apiKey || '',
-      'apikey': 'LOCAL_DEV_KEY',
     },
     body: JSON.stringify(payload),
   });
